@@ -9,6 +9,9 @@ from flasgger import Swagger
 from app.routes import api
 from app.models import db
 
+# Cluster log function to be scheduled
+from app.controllers.physical_cluster_status import clusterLogFunction
+
 # Load env variabes
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
@@ -45,6 +48,12 @@ def create_app(config_name):
     }
 
     Swagger(app, template_file='api_docs.json')
+    
+    # Add cluster logging command to flask
+    @app.cli.command()
+    def scheduledLogging():
+        """Logs physical status."""
+        clusterLogFunction()
 
     # handle default 404 exceptions with a custom response
 

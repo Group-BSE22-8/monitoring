@@ -6,6 +6,23 @@ from app.models.log import ClusterLog
 from app.schemas.logs import ClusterLogsSchema
 from app.schemas.logs import StatusSchema
 
+def clusterLogFunction():
+    # Get physical cluster status
+    clusters = json.loads(os.getenv('TEST_CLUSTERS', None))
+
+    physical_cluster_status = get_physical_cluster_status(clusters)
+
+    try:
+        for cluster in physical_cluster_status['data']:
+            PhysicalClusterStatusView.saveClusterLog(cluster['cluster_name'], cluster['status'])
+
+    except Exception as e:
+        print(e)
+
+    return dict(status='success', data={
+        'physical_cluster_status': physical_cluster_status
+    }), 200
+
 
 class PhysicalClusterStatusView(Resource):
     # Saving cluster logs
@@ -22,7 +39,6 @@ class PhysicalClusterStatusView(Resource):
             return dict(status='fail', message='Internal Server Error'), 500
 
         return dict(status='success', message='Log saved'), 201
-
 
     def post(self):
         # Get physical cluster status
@@ -62,7 +78,6 @@ class PhysicalClusterStatusView(Resource):
         #return dict(status='success', data={
         #    'physical_cluster_status': physical_cluster_status
         #}), 200
-
 
 class PhysicalClusterInfo(Resource):
     def get(self):
