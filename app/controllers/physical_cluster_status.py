@@ -3,6 +3,7 @@ import json
 from flask_restful import Resource
 from app.helpers.status import get_physical_cluster_status
 from app.models.log import ClusterLog
+from app.schemas.logs import ClusterLogsSchema
 
 
 class PhysicalClusterStatusView(Resource):
@@ -37,3 +38,20 @@ class PhysicalClusterStatusView(Resource):
         return dict(status='success', data={
             'physical_cluster_status': physical_cluster_status
         }), 200
+
+class PhysicalClusterInfo(Resource):
+    def get(self):
+
+        cluster_schema = ClusterLogsSchema(many=True)
+        clusters_logs = ClusterLog.find_all()
+
+        validated_cluster_data, errors = cluster_schema.dumps(clusters_logs)
+
+        if errors:
+            return dict(status='fail', message='Internal Server Error'), 500
+
+        clusters_data_list = json.loads(validated_cluster_data)
+        cluster_count = len(clusters_data_list)
+
+        return dict(status='Success',
+                    data=dict(logs=json.loads(validated_cluster_data),metadata=dict(cluster_count=cluster_count))), 200
