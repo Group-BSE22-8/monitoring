@@ -5,6 +5,23 @@ from app.helpers.status import get_physical_cluster_status
 from app.models.log import ClusterLog
 from app.schemas.logs import ClusterLogsSchema
 
+def clusterLogFunction():
+    # Get physical cluster status
+    clusters = json.loads(os.getenv('TEST_CLUSTERS', None))
+
+    physical_cluster_status = get_physical_cluster_status(clusters)
+
+    try:
+        for cluster in physical_cluster_status['data']:
+            PhysicalClusterStatusView.saveClusterLog(cluster['cluster_name'], cluster['status'])
+
+    except Exception as e:
+        print(e)
+
+    return dict(status='success', data={
+        'physical_cluster_status': physical_cluster_status
+    }), 200
+
 
 class PhysicalClusterStatusView(Resource):
     # Saving cluster logs
@@ -23,21 +40,7 @@ class PhysicalClusterStatusView(Resource):
         return dict(status='success', message='Log saved'), 201
 
     def get(self):
-        # Get physical cluster status
-        clusters = json.loads(os.getenv('TEST_CLUSTERS', None))
-
-        physical_cluster_status = get_physical_cluster_status(clusters)
-
-        try:
-            for cluster in physical_cluster_status['data']:
-                PhysicalClusterStatusView.saveClusterLog(cluster['cluster_name'], cluster['status'])
-
-        except Exception as e:
-            print(e)
-
-        return dict(status='success', data={
-            'physical_cluster_status': physical_cluster_status
-        }), 200
+        clusterLogFunction()
 
 class PhysicalClusterInfo(Resource):
     def get(self):
