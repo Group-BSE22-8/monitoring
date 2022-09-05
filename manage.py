@@ -4,9 +4,7 @@ from app.models import db
 from server import app
 
 # import models
-from app.models.user import User
-from app.models.product import Product
-
+from app.models.log import ClusterLog
 
 # register app and db with migration class
 migrate = Migrate(app, db)
