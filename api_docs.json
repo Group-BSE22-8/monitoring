@@ -28,6 +28,24 @@
             }
           }
         }
+      },
+      "/status/cluster_data": {
+        "get": {
+          "tags": ["cluster_data"],
+          "summary": "Returns the logged data for the different clusters.",
+          "produces": ["application/json"],
+          "parameters": [
+
+          ],
+          "responses": {
+            "201": {
+              "description": "Successfully gets status"
+            },
+            "500": {
+              "description": "Server error"
+            }
+          }
+        }
       }
     },
     "definitions": {
