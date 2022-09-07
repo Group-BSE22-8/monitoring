@@ -1,4 +1,4 @@
-# Flask API Template
+# Physical Cluster Monitoring
 
 This project is aimed at checking the status of the physical Crane Cloud Clusters.
 
