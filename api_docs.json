@@ -46,10 +46,60 @@
             }
           }
         }
+      },
+      "/proxmox/cluster_metrics": {
+        "get": {
+          "tags": ["cluster_metrics"],
+          "summary": "Returns the cluster metrics including CPU usage, Memory usage and Disk usage.",
+          "produces": ["application/json"],
+          "parameters": [
+
+          ],
+          "responses": {
+            "201": {
+              "description": "Successfully gets cluster metrics"
+            },
+            "500": {
+              "description": "Server error"
+            }
+          }
+        },
+        "post": {
+          "tags": ["vm_metrics"],
+          "summary": "Returns the virtual machine metrics for a node including CPU usage, Memory usage and Disk usage.",
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "Node id",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/node_id"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Successfully gets cluster metrics"
+            },
+            "500": {
+              "description": "Server error"
+            }
+          }
+        }
       }
     },
     "definitions": {
-    
+      "node_id": {
+        "type": "string",
+        "required": true,
+        "properties": {
+          "node_id": {
+            "type": "string",
+            "example": "pve1"
+          }
+        }
+      }
     }
   }
   
