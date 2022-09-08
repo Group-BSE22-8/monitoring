@@ -56,8 +56,8 @@ class PhysicalClusterStatusView(Resource):
         physical_cluster_status = get_physical_cluster_status(clusters)
 
         try:
-            for cluster in physical_cluster_status['data']:
-                PhysicalClusterStatusView.saveClusterLog(cluster['cluster_name'], cluster['status'])
+            # for cluster in physical_cluster_status['data']:
+            #     PhysicalClusterStatusView.saveClusterLog(cluster['cluster_name'], cluster['status'])
        
             clusters_logs = ClusterLog.find_all(cluster_id = validated_update_data['cluster_id'])
 
