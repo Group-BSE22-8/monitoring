@@ -63,15 +63,20 @@
               "description": "Server error"
             }
           }
-        }
-      },
-      "/proxmox/vm_metrics/{node_id}": {
+        },
         "post": {
           "tags": ["vm_metrics"],
           "summary": "Returns the virtual machine metrics for a node including CPU usage, Memory usage and Disk usage.",
           "produces": ["application/json"],
           "parameters": [
-            "node_id"
+            {
+              "in": "body",
+              "name": "Node id",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/node_id"
+              }
+            }
           ],
           "responses": {
             "201": {
@@ -85,7 +90,16 @@
       }
     },
     "definitions": {
-      
+      "node_id": {
+        "type": "string",
+        "required": true,
+        "properties": {
+          "node_id": {
+            "type": "string",
+            "example": "pve1"
+          }
+        }
+      }
     }
   }
   
