@@ -87,6 +87,24 @@
             }
           }
         }
+      },
+      "/sendmail": {
+        "get": {
+          "tags": ["send mail"],
+          "summary": "Sends cluster down email",
+          "produces": ["application/json"],
+          "parameters": [
+
+          ],
+          "responses": {
+            "201": {
+              "description": "Successfully gets status"
+            },
+            "500": {
+              "description": "Server error"
+            }
+          }
+        }
       }
     },
     "definitions": {
