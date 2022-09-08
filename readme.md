@@ -64,6 +64,9 @@ export CLUSTERS='[{
         "url": "http://127.0.0.1:5000"
     }
 }]'
+export PROXMOX_PASSWORD="password"
+export PROXMOX_USER="user@realm"
+export PROXMOX_URL="https://10.10.10.10:8006"
 ```
 
 The TEST_CLUSTERS variable will connect to the default flask application url: http://127.0.0.1:5000. This should ideally only be used for testing purposes and the actual clusters should be put inside the CLUSTERS variable for the production physical clusters to monitor.
