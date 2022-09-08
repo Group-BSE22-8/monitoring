@@ -14,3 +14,4 @@ api.add_resource(PhysicalClusterInfo, '/status/cluster_data')
 api.add_resource(ProxmoxClusterInfoView, '/proxmox/cluster_metrics', endpoint='proxmox_info')
 api.add_resource(ProxmoxClusterInfoView, '/proxmox/cluster_metrics/machine')
 api.add_resource(SendMail, '/sendmail', endpoint='send_mail')
+

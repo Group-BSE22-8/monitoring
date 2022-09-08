@@ -1,0 +1,42 @@
+export FLASK_APP=server.py
+export DATABASE_URI=postgresql://postgres:postgres@localhost:5432/cranecloud
+export FLASK_APP_SECRET=qY2i691SX2sEuZ7LUjY180RSv6xCVI4Jmw3qCeUiyV0i0vzmg
+export FLASK_ENV=development
+export FLASK_RUN_PORT=4000
+export TEST_CLUSTERS='[
+    {
+        "name": "node/pve1",
+        "url": "http://127.0.0.1:4000"
+    },
+    {
+        "name": "node/pve2",
+        "url": "http://127.0.0.1:4000"
+    },
+    {
+        "name": "node/pve3",
+        "url": "http://127.0.0.1:4000"
+    },
+    {
+        "name": "node/pve4",
+        "url": "http://127.0.0.1:4000"
+    }
+]'
+
+export CLUSTERS='[
+    {
+        "name": "pve-dicts1",
+        "url": "https://10.29.1.21:8006/"
+    },
+    {
+        "name": "pve-dicts2",
+        "url": "https://10.29.1.22:8006/"
+    },
+    {
+        "name": "pve-dicts3",
+        "url": "https://10.29.1.23:8006/"
+    },
+    {
+        "name": "pve-dicts4",
+        "url": "https://10.29.1.24:8006/"
+    }
+]'
