@@ -1,6 +1,6 @@
 from flask_restful import Api
 from app.controllers import (
-    IndexView, PhysicalClusterStatusView, PhysicalClusterInfo, ProxmoxClusterInfoView)
+    IndexView, PhysicalClusterStatusView, PhysicalClusterInfo, ProxmoxClusterInfoView, SendMail)
 
 
 api = Api()
@@ -13,3 +13,4 @@ api.add_resource(PhysicalClusterStatusView, '/status', endpoint='physical_cluste
 api.add_resource(PhysicalClusterInfo, '/status/cluster_data')
 api.add_resource(ProxmoxClusterInfoView, '/proxmox/cluster_metrics', endpoint='proxmox_info')
 api.add_resource(ProxmoxClusterInfoView, '/proxmox/cluster_metrics/<string:node_id>')
+api.add_resource(SendMail, '/sendmail', endpoint='send_mail')
