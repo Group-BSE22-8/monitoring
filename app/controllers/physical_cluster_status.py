@@ -78,6 +78,7 @@ class PhysicalClusterStatusView(Resource):
         #return dict(status='success', data={
         #    'physical_cluster_status': physical_cluster_status
         #}), 200
+        
 
 class PhysicalClusterInfo(Resource):
     def get(self):
