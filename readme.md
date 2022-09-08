@@ -91,7 +91,7 @@ flask run
 
 ### Test the API
 
-Through your browser go to link `localhost:<flask_port>/`.
+Through your browser go to link `localhost:5000/`.
 
 ### Activating logging of the cluster status every 5 seconds
 There exists a shell script under the ````scipts``` folder called ```physicalClusterJob.sh``` that will handle the logging by running the ```flask scheduledlogging``` command. This command references a function ```clusterLogFunction``` from the ```physical_cluster_status.py``` controller. Modification of the logging functionality should be made to the above function.
