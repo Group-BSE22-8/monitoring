@@ -8,6 +8,7 @@ from flask_jwt_extended import JWTManager
 from flasgger import Swagger
 from app.routes import api
 from app.models import db
+from flask_mail import Mail, Message
 
 # Cluster log function to be scheduled
 from app.controllers.physical_cluster_status import clusterLogFunction
@@ -23,7 +24,19 @@ def create_app(config_name):
     # import config options
     from config.config import app_config
 
-    app = Flask(__name__)
+    app = Flask(__name__, template_folder="app/templates")
+
+    # mail settings
+    app.config['MAIL_SERVER'] = "smtp.gmail.com"
+    app.config['MAIL_PORT'] = 465
+    app.config['MAIL_USE_TLS'] = False
+    app.config['MAIL_USE_SSL'] = True
+
+    # gmail authentication
+    app.config['MAIL_USERNAME'] = os.getenv("APP_MAIL_USERNAME")
+    app.config['MAIL_PASSWORD'] = os.getenv("APP_MAIL_PASSWORD")
+
+    mail = Mail(app)
 
     # allow cross-domain requests
     CORS(app)
