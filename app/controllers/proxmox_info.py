@@ -1,7 +1,7 @@
 import os
 from wsgiref import headers
 import requests
-from flask_restful import Resource
+from flask_restful import Resource, request
 
 class ProxmoxClusterInfoView(Resource):
     # URL to proxmox cluster
@@ -50,13 +50,14 @@ class ProxmoxClusterInfoView(Resource):
         else:
             return dict(status='fail', message='Internal Server Error'), 500
 
-    def post(self, node_id):
+    def post(self):
         """ Returns the virtual machines running under a cluster """
         tokens = ProxmoxClusterInfoView.connection()
+        app_data = request.get_json()
         if tokens["headers"] is not None or tokens["cookies"] is not None:
             headers, cookies = tokens["headers"], tokens["cookies"]
             try:
-                raw_vm_data = requests.get(tokens["proxmox_url"] + "/api2/json/nodes/"+node_id+"/qemu", headers=headers, verify=False, cookies=cookies)
+                raw_vm_data = requests.get(tokens["proxmox_url"] + "/api2/json/nodes/"+app_data["node_id"]+"/qemu", headers=headers, verify=False, cookies=cookies)
                 vm_data = raw_vm_data.json()
                 print(vm_data)
                 return dict(status='success', data={
