@@ -5,16 +5,26 @@ from app.helpers.status import get_physical_cluster_status
 from app.models.log import ClusterLog
 from app.schemas.logs import ClusterLogsSchema
 from app.schemas.logs import StatusSchema
+from app.helpers.test_email import send_cluster_email
+from datetime import datetime
+from flask import current_app
+from app.controllers.send_mail import sendFunction
 
 def clusterLogFunction():
     # Get physical cluster status
     clusters = json.loads(os.getenv('TEST_CLUSTERS', None))
-
+    sent = {}
     physical_cluster_status = get_physical_cluster_status(clusters)
 
     try:
         for cluster in physical_cluster_status['data']:
             PhysicalClusterStatusView.saveClusterLog(cluster['cluster_name'], cluster['status'])
+
+            if cluster['status'] == 'fail' and sent[cluster['cluster_name']] == False:
+                sendFunction(cluster['cluster_name'])
+                sent[cluster['cluster_name']] = True
+            else:
+                sent[cluster['cluster_name']] = False
 
     except Exception as e:
         print(e)
